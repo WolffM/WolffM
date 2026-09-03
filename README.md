@@ -1,7 +1,5 @@
 - https://hadoku.me/
-- https://hadoku.me/admin
 - https://hadoku.me/aggregator/
-- https://hadoku.me/auth
 - https://hadoku.me/command-station/
 - https://hadoku.me/conjure
 - https://hadoku.me/contact/
@@ -22,8 +20,4 @@
 - https://hadoku.me/study/
 - https://hadoku.me/task/
 - https://hadoku.me/tenhands/
-- https://hadoku.me/v1/
-- https://hadoku.me/v2/
-- https://hadoku.me/v3/
 - https://hadoku.me/watchparty/
-- https://vault.hadoku.me

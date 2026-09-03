@@ -18,8 +18,12 @@
  *
  * Subdomains are excluded wholesale: every one either proxies a hadoku.me
  * prefix already listed (privatebin, pygmalion, dataplatform, …) or answers
- * JSON/404 to a browser. vault.hadoku.me is the one that is neither, and is
- * added back by name.
+ * JSON/404 to a browser.
+ *
+ * EXCLUDED then names what survives all three filters and is still not wanted
+ * here. It is a deliberate list, not a rule — the filters above cannot derive
+ * "I do not want to advertise this", so without it every regeneration would
+ * quietly put these six back.
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -30,11 +34,19 @@ const OUT = new URL('./README.md', import.meta.url);
 /** Redirects, keyed by the alias → where it lands. Both spellings are one place. */
 const ALIASES = new Set(['/jobs', '/printtool', '/games-host']);
 
-/** Serves HTML, proxies nothing already listed. */
-const EXTRA_HOSTS = ['https://vault.hadoku.me'];
+/**
+ * Pages that pass every filter but stay off the profile by choice.
+ *
+ * /admin and /auth are operator plumbing, not destinations. /v1 /v2 /v3 are the
+ * three frontpage variants that `/` already crossfades between, so listing them
+ * shows the same front page four times.
+ */
+const EXCLUDED = new Set(['/admin', '/auth', '/v1/', '/v2/', '/v3/']);
 
 const routes = JSON.parse(readFileSync(ROUTES_JSON, 'utf8'));
-const paths = routes.pages.map((p) => p.displayPath).filter((p) => !ALIASES.has(p));
+const paths = routes.pages
+	.map((p) => p.displayPath)
+	.filter((p) => !ALIASES.has(p) && !EXCLUDED.has(p));
 
 // A page is a sub-route when another LISTED page is its parent. Compared on the
 // slash-normalised path so /games/ is recognised as the parent of /games/host,
@@ -48,7 +60,7 @@ const kept = paths.filter((p) => {
 	});
 });
 
-const urls = [...kept.map((p) => `https://hadoku.me${p}`).sort(), ...EXTRA_HOSTS];
+const urls = kept.map((p) => `https://hadoku.me${p}`).sort();
 
 // One markdown list item per URL. Bare URLs on consecutive lines collapse into a
 // single wrapped paragraph on GitHub, so the dash is what keeps them one-per-line.
