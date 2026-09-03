@@ -4,7 +4,6 @@
 - https://hadoku.me/contact/
 - https://hadoku.me/craft/
 - https://hadoku.me/dataplatform/
-- https://hadoku.me/docs/
 - https://hadoku.me/filetransfer
 - https://hadoku.me/hopper/
 - https://hadoku.me/invoke
