@@ -6,8 +6,6 @@
 - https://hadoku.me/dataplatform/
 - https://hadoku.me/docs/
 - https://hadoku.me/filetransfer
-- https://hadoku.me/games/brave-quartet
-- https://hadoku.me/games/host
 - https://hadoku.me/hopper/
 - https://hadoku.me/invoke
 - https://hadoku.me/jobplatform/

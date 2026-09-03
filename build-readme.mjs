@@ -23,7 +23,8 @@
  * EXCLUDED then names what survives all three filters and is still not wanted
  * here. It is a deliberate list, not a rule — the filters above cannot derive
  * "I do not want to advertise this", so without it every regeneration would
- * quietly put these six back.
+ * quietly put these back. It is applied LAST, after the sub-route collapse, so
+ * that excluding a parent still hides the children it stood for.
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -53,9 +54,7 @@ const EXCLUDED = new Set([
 ]);
 
 const routes = JSON.parse(readFileSync(ROUTES_JSON, 'utf8'));
-const paths = routes.pages
-	.map((p) => p.displayPath)
-	.filter((p) => !ALIASES.has(p) && !EXCLUDED.has(p));
+const paths = routes.pages.map((p) => p.displayPath).filter((p) => !ALIASES.has(p));
 
 // A page is a sub-route when another LISTED page is its parent. Compared on the
 // slash-normalised path so /games/ is recognised as the parent of /games/host,
@@ -69,7 +68,14 @@ const kept = paths.filter((p) => {
 	});
 });
 
-const urls = kept.map((p) => `https://hadoku.me${p}`).sort();
+// EXCLUDED is applied AFTER the sub-route collapse, never before. A parent has
+// to stay in `paths` long enough to suppress its own children: dropping /games/
+// first put /games/host and /games/brave-quartet BACK, because nothing was left
+// to parent them, and the list grew by one on a change meant to shrink it.
+const urls = kept
+	.filter((p) => !EXCLUDED.has(p))
+	.map((p) => `https://hadoku.me${p}`)
+	.sort();
 
 // One markdown list item per URL. Bare URLs on consecutive lines collapse into a
 // single wrapped paragraph on GitHub, so the dash is what keeps them one-per-line.
