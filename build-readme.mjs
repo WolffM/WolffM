@@ -37,11 +37,12 @@ const ALIASES = new Set(['/jobs', '/printtool', '/games-host']);
 /**
  * Pages that pass every filter but stay off the profile by choice.
  *
- * /admin and /auth are operator plumbing, not destinations. /v1 /v2 /v3 are the
+ * /admin, /auth and /command-station are operator plumbing, not destinations.
+ * /v1 /v2 /v3 are the
  * three frontpage variants that `/` already crossfades between, so listing them
  * shows the same front page four times.
  */
-const EXCLUDED = new Set(['/admin', '/auth', '/v1/', '/v2/', '/v3/']);
+const EXCLUDED = new Set(['/admin', '/auth', '/command-station/', '/v1/', '/v2/', '/v3/']);
 
 const routes = JSON.parse(readFileSync(ROUTES_JSON, 'utf8'));
 const paths = routes.pages

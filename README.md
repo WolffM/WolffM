@@ -1,6 +1,5 @@
 - https://hadoku.me/
 - https://hadoku.me/aggregator/
-- https://hadoku.me/command-station/
 - https://hadoku.me/conjure
 - https://hadoku.me/contact/
 - https://hadoku.me/craft/
