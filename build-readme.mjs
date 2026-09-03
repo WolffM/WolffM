@@ -42,7 +42,15 @@ const ALIASES = new Set(['/jobs', '/printtool', '/games-host']);
  * three frontpage variants that `/` already crossfades between, so listing them
  * shows the same front page four times.
  */
-const EXCLUDED = new Set(['/admin', '/auth', '/command-station/', '/v1/', '/v2/', '/v3/']);
+const EXCLUDED = new Set([
+	'/admin',
+	'/auth',
+	'/command-station/',
+	'/games/',
+	'/v1/',
+	'/v2/',
+	'/v3/',
+]);
 
 const routes = JSON.parse(readFileSync(ROUTES_JSON, 'utf8'));
 const paths = routes.pages
